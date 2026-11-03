@@ -5,9 +5,9 @@
 #   module.json  - served by releases/latest/download/module.json (the install/update URL)
 #   module.zip   - the package Foundry downloads and extracts
 #
-# Before tagging, bump "version" in module.json to match the tag (a leading "v" on
-# either side is ignored). The "download" URL is rewritten from the tag here, so it
-# can't go stale.
+# The tag is the only place the version lives: "version" (tag minus the leading "v")
+# and "download" are written into the released module.json here. The values in the
+# repo's module.json are placeholders and never need bumping.
 #
 # Re-running is safe: if the release already exists, its assets are replaced.
 
@@ -37,19 +37,14 @@ jobs:
         with:
           ref: refs/tags/${{ env.TAG }}
 
-      - name: Check tag matches module.json version
+      - name: Set version and download URL from the tag
         run: |
-          version="$(jq -r .version module.json)"
-          if [ "${version#v}" != "${TAG#v}" ]; then
-            echo "::error::Tag ${TAG} does not match module.json version ${version}"
-            exit 1
-          fi
-
-      - name: Set download URL for this release
-        run: |
+          version="${TAG#v}"
           url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/module.zip"
-          jq --arg url "$url" '.download = $url' module.json > module.json.tmp
+          jq --arg version "$version" --arg url "$url" \
+            '.version = $version | .download = $url' module.json > module.json.tmp
           mv module.json.tmp module.json
+          echo "Releasing ${version}"
 
       - name: Build module.zip
         run: |

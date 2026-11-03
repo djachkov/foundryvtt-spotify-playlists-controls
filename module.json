@@ -2,7 +2,7 @@
   "id": "mancer_spotify_controls",
   "title": "Mancer's Spotify Controls",
   "description": "Remote-control your Spotify playback from Foundry: play your playlists, pick songs and put playlists or player actions on the hotbar. Audio plays on your Spotify playback device, not in Foundry.",
-  "version": "v1.0.0",
+  "version": "1.0.0",
   "authors": [{ "name": "Dmitrii Diachkov", "url": "https://github.com/djachkov" }],
   "compatibility": {
     "minimum": "14",
