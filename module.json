@@ -15,7 +15,7 @@
   ],
   "url": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls",
   "manifest": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls/releases/latest/download/module.json",
-  "download": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls/releases/download/v0.1.0/module.zip",
+  "download": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls/releases/latest/download/module.zip",
   "readme": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls/blob/master/README.md",
   "bugs": "https://github.com/djachkov/foundryvtt-spotify-playlists-controls/issues"
 }
