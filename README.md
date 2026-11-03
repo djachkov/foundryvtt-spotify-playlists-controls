@@ -27,9 +27,9 @@ nothing.
 3. Create an app at <https://developer.spotify.com/dashboard>:
    - Tick **Web API**.
    - Under **Redirect URIs**, add the exact address the Spotify window shows. It is
-     `<your Foundry URL>/modules/mancer_spotify/callback.txt`, for example
-     `https://foundry.example.com/modules/mancer_spotify/callback.txt` or
-     `http://127.0.0.1:30000/modules/mancer_spotify/callback.txt`.
+     `<your Foundry URL>/modules/mancer_spotify_controls/callback.txt`, for example
+     `https://foundry.example.com/modules/mancer_spotify_controls/callback.txt` or
+     `http://127.0.0.1:30000/modules/mancer_spotify_controls/callback.txt`.
 4. Paste the app's **Client ID** into the window and save.
 5. Click **Connect Spotify** and log in. The popup closes by itself.
 6. Under **Choose Playlists**, tick the playlists you want as tiles.
@@ -68,7 +68,7 @@ The macros are ordinary script macros that call the module's API, so you can als
 write your own:
 
 ```js
-const spotify = game.modules.get("mancer_spotify").api;
+const spotify = game.modules.get("mancer_spotify_controls").api;
 await spotify.playPlaylist("spotify:playlist:37i9dQZF1DXcBWIGoYBM5M");
 await spotify.playTrack("spotify:playlist:…", "spotify:track:…"); // continues with the playlist
 await spotify.playPause();

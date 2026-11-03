@@ -1,0 +1,52 @@
+# Builds a Foundry release when a version tag (e.g. v0.2.0) is pushed.
+#
+# The release gets two assets, which is what module.json's URLs point at:
+#   module.json  - served by releases/latest/download/module.json (the install/update URL)
+#   module.zip   - the package Foundry downloads and extracts
+#
+# Before tagging, bump "version" in module.json to match the tag (without the "v").
+# The "download" URL is rewritten from the tag here, so it can't go stale.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches module.json version
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          version="$(jq -r .version module.json)"
+          if [ "v${version}" != "${tag}" ]; then
+            echo "::error::Tag ${tag} does not match module.json version ${version}"
+            exit 1
+          fi
+
+      - name: Set download URL for this release
+        run: |
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/module.zip"
+          jq --arg url "$url" '.download = $url' module.json > module.json.tmp
+          mv module.json.tmp module.json
+
+      - name: Build module.zip
+        run: |
+          zip -r module.zip \
+            module.json README.md callback.txt \
+            scripts styles templates lang icons
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" module.json module.zip \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
