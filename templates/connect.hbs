@@ -1,0 +1,18 @@
+<div class="mancer-spotify-connect">
+  <i class="fa-brands fa-spotify mancer-spotify-logo" inert></i>
+  <p>{{localize "MANCER_SPOTIFY.Connect.Hint"}}</p>
+  <button type="button" class="mancer-spotify-primary" data-action="connect">
+    <i class="fa-solid fa-right-to-bracket" inert></i> {{localize "MANCER_SPOTIFY.Connect.Button"}}
+  </button>
+  {{#if (or loginPending redirectProblem)}}
+  <div class="mancer-spotify-paste">
+    <label for="mancer-spotify-pasted-url">{{localize "MANCER_SPOTIFY.Connect.PasteLabel"}}</label>
+    <p class="hint">{{localize "MANCER_SPOTIFY.Connect.PasteHint"}}</p>
+    <textarea id="mancer-spotify-pasted-url" name="pastedUrl" rows="3" spellcheck="false"></textarea>
+    <button type="button" data-action="pasteUrl">{{localize "MANCER_SPOTIFY.Connect.PasteButton"}}</button>
+  </div>
+  {{/if}}
+  <button type="button" class="mancer-spotify-link" data-action="editClientId">
+    {{localize "MANCER_SPOTIFY.Connect.ChangeClientId"}}
+  </button>
+</div>

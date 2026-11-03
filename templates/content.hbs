@@ -1,0 +1,16 @@
+<section class="mancer-spotify-content">
+  {{#if connected}}
+  <nav class="mancer-spotify-tabs">
+    <button type="button" data-action="switchView" data-view="playlists"
+            class="{{#if (eq view "playlists")}}active{{/if}}{{#if (eq view "tracks")}}active{{/if}}">
+      <i class="fa-solid fa-table-cells-large" inert></i> {{localize "MANCER_SPOTIFY.Tabs.Playlists"}}
+    </button>
+    <button type="button" data-action="switchView" data-view="manage" class="{{#if (eq view "manage")}}active{{/if}}">
+      <i class="fa-solid fa-list-check" inert></i> {{localize "MANCER_SPOTIFY.Tabs.Manage"}}
+    </button>
+  </nav>
+  {{/if}}
+  <div class="mancer-spotify-scroll">
+    {{> (lookup this "partial")}}
+  </div>
+</section>

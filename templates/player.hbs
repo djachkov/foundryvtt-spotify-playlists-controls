@@ -1,0 +1,36 @@
+<footer class="mancer-spotify-player" {{#unless connected}}hidden{{/unless}}>
+  {{#if connected}}
+  <div class="mancer-spotify-now">
+    {{#if playback.active}}
+    {{#if playback.image}}<img src="{{playback.image}}" alt="">{{/if}}
+    <div class="mancer-spotify-now-text">
+      <strong>{{playback.title}}</strong>
+      <small>{{playback.artists}}</small>
+      {{#if playback.device}}<small class="mancer-spotify-device"><i class="fa-solid fa-volume-high" inert></i> {{playback.device}}</small>{{/if}}
+    </div>
+    {{else if playback.known}}
+    <div class="mancer-spotify-now-text"><small>{{localize "MANCER_SPOTIFY.Player.Idle"}}</small></div>
+    {{/if}}
+  </div>
+  <div class="mancer-spotify-controls">
+    {{#each actions}}
+    <button type="button" data-action="player" data-command="{{action}}" data-spotify-drag="action"
+            data-tooltip="{{localize label}}"
+            class="{{#if (and (eq action "toggleShuffle") @root.playback.shuffle)}}active{{/if}}{{#if (and (eq action "cycleRepeat") (ne @root.playback.repeat "off") @root.playback.active)}}active{{/if}}">
+      {{#if (eq action "playPause")}}
+      <i class="fa-solid {{#if @root.playback.playing}}fa-pause{{else}}fa-play{{/if}}" inert></i>
+      {{else if (and (eq action "cycleRepeat") @root.playback.repeatTrack)}}
+      <i class="{{icon}}" inert></i><span class="mancer-spotify-repeat-one">1</span>
+      {{else}}
+      <i class="{{icon}}" inert></i>
+      {{/if}}
+    </button>
+    {{/each}}
+    <button type="button" class="mancer-spotify-disconnect" data-action="disconnect"
+            data-tooltip="MANCER_SPOTIFY.Disconnect">
+      <i class="fa-solid fa-right-from-bracket" inert></i>
+    </button>
+  </div>
+  <p class="hint">{{localize "MANCER_SPOTIFY.Player.DragHint"}}</p>
+  {{/if}}
+</footer>

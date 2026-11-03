@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "@client/*": ["../../app/client/*"],
+      "@common/*": ["../../app/common/*"]
+    }
+  },
+  "include": [
+    "scripts/**/*.mjs",
+    "../../app/client/**/*.mjs",
+    "../../app/client/**/*.d.mts",
+    "../../app/common/global.d.mts"
+  ]
+}

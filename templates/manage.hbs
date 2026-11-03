@@ -1,0 +1,26 @@
+<div class="mancer-spotify-manage">
+  <div class="mancer-spotify-toolbar">
+    <p class="hint">{{localize "MANCER_SPOTIFY.Manage.Hint"}}</p>
+    <button type="button" data-action="refreshPlaylists" {{#if loading}}disabled{{/if}}>
+      <i class="fa-solid fa-rotate {{#if loading}}fa-spin{{/if}}" inert></i> {{localize "MANCER_SPOTIFY.Manage.Refresh"}}
+    </button>
+  </div>
+  {{#if allPlaylists}}
+  <ul class="mancer-spotify-list">
+    {{#each allPlaylists}}
+    <li data-id="{{id}}">
+      <label>
+        <input type="checkbox" data-action="togglePlaylist" {{checked selected}}>
+        <img src="{{#if image}}{{image}}{{else}}{{@root.fallbackImage}}{{/if}}" alt="">
+        <span class="mancer-spotify-list-name">{{name}}</span>
+        <span class="mancer-spotify-list-meta">{{owner}}{{#if total}} · {{total}}{{/if}}</span>
+      </label>
+    </li>
+    {{else}}
+    <li class="mancer-spotify-empty">{{localize "MANCER_SPOTIFY.Manage.None"}}</li>
+    {{/each}}
+  </ul>
+  {{else if loading}}
+  <p class="mancer-spotify-empty"><i class="fa-solid fa-spinner fa-spin" inert></i></p>
+  {{/if}}
+</div>

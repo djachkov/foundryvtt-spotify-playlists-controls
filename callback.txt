@@ -1,0 +1,5 @@
+Spotify login finished.
+
+This window closes by itself. If it stays open, copy this page's address
+(the whole URL, it contains "code=") and paste it into "Paste the redirect URL"
+in the Spotify window in Foundry.

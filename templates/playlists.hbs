@@ -1,0 +1,26 @@
+<div class="mancer-spotify-playlists">
+  {{#if selected.length}}
+  <p class="hint">{{localize "MANCER_SPOTIFY.Playlists.Hint"}}</p>
+  <ul class="mancer-spotify-tiles">
+    {{#each selected}}
+    <li class="mancer-spotify-tile" data-action="playPlaylist" data-uri="{{uri}}" data-id="{{id}}"
+        data-spotify-drag="playlist" data-tooltip="{{name}}">
+      <img src="{{#if image}}{{image}}{{else}}{{@root.fallbackImage}}{{/if}}" alt="" draggable="false">
+      <i class="fa-solid fa-circle-play mancer-spotify-tile-play" inert></i>
+      <button type="button" class="mancer-spotify-tile-songs" data-action="openTracks"
+              data-tooltip="MANCER_SPOTIFY.Playlists.Songs">
+        <i class="fa-solid fa-list" inert></i>
+      </button>
+      <span class="mancer-spotify-tile-name">{{name}}</span>
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <div class="mancer-spotify-empty">
+    <p>{{localize "MANCER_SPOTIFY.Playlists.Empty"}}</p>
+    <button type="button" data-action="switchView" data-view="manage">
+      <i class="fa-solid fa-list-check" inert></i> {{localize "MANCER_SPOTIFY.Tabs.Manage"}}
+    </button>
+  </div>
+  {{/if}}
+</div>

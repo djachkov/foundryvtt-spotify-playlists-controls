@@ -1,0 +1,330 @@
+/* Mancer Spotify */
+
+.mancer-spotify {
+  --mancer-spotify-green: #1db954;
+  --mancer-spotify-tile: 132px;
+}
+
+.mancer-spotify .window-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  overflow: hidden;
+}
+
+.mancer-spotify .hint {
+  margin: 0 0 0.5rem;
+  font-size: var(--font-size-12);
+  color: var(--color-text-subtle);
+}
+
+.mancer-spotify button.active {
+  color: var(--mancer-spotify-green);
+  border-color: var(--mancer-spotify-green);
+}
+
+/* Content area */
+
+.mancer-spotify-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mancer-spotify-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mancer-spotify-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.mancer-spotify-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--color-text-subtle);
+}
+
+.mancer-spotify-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.mancer-spotify-toolbar > .hint,
+.mancer-spotify-toolbar > h3 {
+  flex: 1;
+  margin: 0;
+}
+.mancer-spotify-toolbar > button {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+/* Setup and connect */
+
+.mancer-spotify-steps {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mancer-spotify-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+.mancer-spotify-copy code {
+  flex: 1;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.mancer-spotify-copy button {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.mancer-spotify-connect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+}
+.mancer-spotify-logo {
+  font-size: 4rem;
+  color: var(--mancer-spotify-green);
+}
+.mancer-spotify-paste {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: left;
+}
+.mancer-spotify-paste textarea {
+  font-family: monospace;
+  font-size: var(--font-size-12);
+}
+
+button.mancer-spotify-primary {
+  width: auto;
+  padding: 0.5rem 1.5rem;
+  border-radius: 999px;
+  background: var(--mancer-spotify-green);
+  color: #000;
+  font-weight: bold;
+}
+
+button.mancer-spotify-link {
+  width: auto;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: var(--color-text-subtle);
+}
+
+/* Playlist tiles */
+
+.mancer-spotify-tiles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--mancer-spotify-tile), 1fr));
+  gap: 0.75rem;
+}
+
+.mancer-spotify-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+.mancer-spotify-tile img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 40%);
+}
+.mancer-spotify-tile-name {
+  font-size: var(--font-size-13);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mancer-spotify-tile-play {
+  position: absolute;
+  inset: 0 0 auto 0;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+  color: var(--mancer-spotify-green);
+  opacity: 0;
+  transition: opacity 0.15s;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 70%);
+}
+.mancer-spotify-tile:hover .mancer-spotify-tile-play {
+  opacity: 1;
+}
+button.mancer-spotify-tile-songs {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 65%);
+  color: #fff;
+  border: none;
+}
+button.mancer-spotify-tile-songs:hover {
+  background: rgb(0 0 0 / 85%);
+  color: var(--mancer-spotify-green);
+}
+
+/* Lists (manage, tracks) */
+
+.mancer-spotify-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mancer-spotify-list > li > label,
+.mancer-spotify-track {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.mancer-spotify-list > li > label:hover,
+.mancer-spotify-track:hover {
+  background: rgb(255 255 255 / 6%);
+}
+.mancer-spotify-list img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border: none;
+  border-radius: 3px;
+  flex: 0 0 auto;
+}
+.mancer-spotify-list-name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mancer-spotify-list-name small {
+  color: var(--color-text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mancer-spotify-list-meta {
+  flex: 0 0 auto;
+  font-size: var(--font-size-12);
+  color: var(--color-text-subtle);
+}
+.mancer-spotify-track-index {
+  width: 1.75rem;
+  text-align: right;
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Now-playing bar */
+
+.mancer-spotify-player {
+  flex: 0 0 auto;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.5rem;
+}
+.mancer-spotify-player[hidden] {
+  display: none;
+}
+.mancer-spotify-player .hint {
+  margin: 0.25rem 0 0;
+  text-align: center;
+}
+.mancer-spotify-now {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 48px;
+}
+.mancer-spotify-now img {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 4px;
+}
+.mancer-spotify-now-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.mancer-spotify-now-text > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mancer-spotify-now-text small {
+  color: var(--color-text-subtle);
+}
+.mancer-spotify-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.mancer-spotify-controls button {
+  position: relative;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border-radius: 50%;
+}
+.mancer-spotify-controls button[data-command="playPause"] {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-top: -0.25rem;
+  background: var(--mancer-spotify-green);
+  color: #000;
+}
+.mancer-spotify-controls .mancer-spotify-disconnect {
+  margin-left: 1rem;
+}
+.mancer-spotify-repeat-one {
+  position: absolute;
+  bottom: 0.15rem;
+  right: 0.35rem;
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+/* Sidebar button */
+
+#playlists .header-actions .mancer-spotify-open i {
+  color: var(--mancer-spotify-green, #1db954);
+}

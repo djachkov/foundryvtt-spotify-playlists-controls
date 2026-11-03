@@ -1,0 +1,29 @@
+<div class="mancer-spotify-tracks">
+  <header class="mancer-spotify-toolbar">
+    <button type="button" data-action="back">
+      <i class="fa-solid fa-arrow-left" inert></i> {{localize "MANCER_SPOTIFY.Tracks.Back"}}
+    </button>
+    <h3>{{tracks.playlist.name}}</h3>
+    <button type="button" data-action="playPlaylist" data-uri="{{tracks.playlist.uri}}">
+      <i class="fa-solid fa-play" inert></i> {{localize "MANCER_SPOTIFY.Tracks.PlayAll"}}
+    </button>
+  </header>
+  {{#if tracks.loading}}
+  <p class="mancer-spotify-empty"><i class="fa-solid fa-spinner fa-spin" inert></i></p>
+  {{else if tracks.unavailable}}
+  <p class="mancer-spotify-empty">{{localize "MANCER_SPOTIFY.Tracks.Unavailable"}}</p>
+  {{else}}
+  <ol class="mancer-spotify-list">
+    {{#each tracks.items}}
+    <li class="mancer-spotify-track" data-action="playTrack" data-uri="{{uri}}">
+      <span class="mancer-spotify-track-index">{{number}}</span>
+      {{#if image}}<img src="{{image}}" alt="">{{/if}}
+      <span class="mancer-spotify-list-name">{{name}}<small>{{artists}}</small></span>
+      <span class="mancer-spotify-list-meta">{{length}}</span>
+    </li>
+    {{else}}
+    <li class="mancer-spotify-empty">{{localize "MANCER_SPOTIFY.Tracks.None"}}</li>
+    {{/each}}
+  </ol>
+  {{/if}}
+</div>

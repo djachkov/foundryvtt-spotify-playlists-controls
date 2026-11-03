@@ -1,0 +1,82 @@
+{
+  "MANCER_SPOTIFY": {
+    "Title": "Spotify",
+    "Disconnect": "Disconnect Spotify",
+    "DisconnectConfirm": "Disconnect this browser from your Spotify account? You can reconnect any time.",
+    "Settings": {
+      "ClientId": {
+        "Name": "Spotify Client ID",
+        "Hint": "The Client ID of your own Spotify app, from developer.spotify.com/dashboard. Each GM connects their own account from the Spotify window."
+      }
+    },
+    "Tabs": {
+      "Playlists": "My Playlists",
+      "Manage": "Choose Playlists"
+    },
+    "Setup": {
+      "Heading": "Connect your own Spotify app",
+      "Step1": "Create an app at <a href=\"https://developer.spotify.com/dashboard\" target=\"_blank\" rel=\"noopener\">developer.spotify.com/dashboard</a> and tick <b>Web API</b>.",
+      "Step2": "Add this exact address under Redirect URIs in the app's settings:",
+      "Step3": "Copy the app's Client ID into the field below. No client secret is needed.",
+      "Copy": "Copy",
+      "WarnLocalhost": "Spotify doesn't accept \"localhost\" addresses. Open Foundry at http://127.0.0.1 instead, or use the address above and paste the URL back after logging in.",
+      "WarnInsecure": "Spotify only accepts HTTPS addresses, or 127.0.0.1. With this Foundry address, the login ends on a page that may not load. Copy that page's URL and paste it back here.",
+      "Premium": "Playback control needs Spotify Premium. Spotify apps in development mode allow up to 5 users, who you add under User Management in the dashboard.",
+      "Save": "Save Client ID"
+    },
+    "Connect": {
+      "Hint": "Log in with Spotify so Foundry can control your playback. Music plays in your Spotify app, not in Foundry.",
+      "Button": "Connect Spotify",
+      "PasteLabel": "Paste the redirect URL",
+      "PasteHint": "If the login window doesn't close by itself, copy its address and paste it here.",
+      "PasteButton": "Finish login",
+      "ChangeClientId": "Change Client ID"
+    },
+    "Playlists": {
+      "Hint": "Click a playlist to play it. Drag it to the hotbar to make a macro.",
+      "Songs": "Show songs",
+      "Empty": "You haven't chosen any playlists yet."
+    },
+    "Manage": {
+      "Hint": "Tick the playlists you want as tiles.",
+      "Refresh": "Refresh",
+      "None": "No playlists found on your account."
+    },
+    "Tracks": {
+      "Back": "Back",
+      "PlayAll": "Play all",
+      "Unavailable": "Spotify only lists the songs of playlists you own or collaborate on. You can still play this playlist as a whole.",
+      "None": "This playlist is empty."
+    },
+    "Player": {
+      "Idle": "Nothing is playing. Start Spotify on any device to control it here.",
+      "DragHint": "Drag a button to the hotbar to make a macro."
+    },
+    "Actions": {
+      "PlayPause": "Play / Pause",
+      "Previous": "Previous track",
+      "Next": "Next track",
+      "Stop": "Stop",
+      "Shuffle": "Shuffle",
+      "Repeat": "Repeat"
+    },
+    "Notifications": {
+      "Connected": "Spotify connected.",
+      "Copied": "Redirect URI copied."
+    },
+    "Errors": {
+      "GMOnly": "Only a GM can control Spotify.",
+      "NoClientId": "Enter your Spotify app's Client ID first.",
+      "NotConnected": "Spotify isn't connected. Connect it in the Spotify window.",
+      "PopupBlocked": "The browser blocked the Spotify login window. Allow popups for Foundry and try again.",
+      "BadPastedUrl": "That isn't the address of the Spotify login's last page. It should contain \"code=\".",
+      "LoginDenied": "Spotify login failed: {error}",
+      "LoginStateMismatch": "That login link doesn't belong to the login started in this window. Click Connect Spotify and try again.",
+      "TokenRequest": "Spotify rejected the login: {error}",
+      "SessionExpired": "Your Spotify session expired. Connect again.",
+      "NoActiveDevice": "No active Spotify device. Start playing something in Spotify first.",
+      "PremiumRequired": "Spotify only allows playback control with a Premium account.",
+      "Api": "Spotify: {error}"
+    }
+  }
+}

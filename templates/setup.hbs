@@ -1,0 +1,33 @@
+<div class="mancer-spotify-setup standard-form">
+  <h2>{{localize "MANCER_SPOTIFY.Setup.Heading"}}</h2>
+  <ol class="mancer-spotify-steps">
+    <li>{{{localize "MANCER_SPOTIFY.Setup.Step1"}}}</li>
+    <li>
+      {{localize "MANCER_SPOTIFY.Setup.Step2"}}
+      <div class="mancer-spotify-copy">
+        <code>{{redirectUri}}</code>
+        <button type="button" data-action="copyRedirect" data-tooltip="MANCER_SPOTIFY.Setup.Copy">
+          <i class="fa-solid fa-copy" inert></i>
+        </button>
+      </div>
+      {{#if (eq redirectProblem "localhost")}}
+      <p class="notification warning">{{localize "MANCER_SPOTIFY.Setup.WarnLocalhost"}}</p>
+      {{/if}}
+      {{#if (eq redirectProblem "insecure")}}
+      <p class="notification warning">{{localize "MANCER_SPOTIFY.Setup.WarnInsecure"}}</p>
+      {{/if}}
+    </li>
+    <li>{{localize "MANCER_SPOTIFY.Setup.Step3"}}</li>
+  </ol>
+  <div class="form-group">
+    <label for="mancer-spotify-client-id">{{localize "MANCER_SPOTIFY.Settings.ClientId.Name"}}</label>
+    <div class="form-fields">
+      <input id="mancer-spotify-client-id" type="text" name="clientId" value="{{clientId}}"
+             autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <p class="hint">{{localize "MANCER_SPOTIFY.Setup.Premium"}}</p>
+  <button type="button" data-action="saveClientId">
+    <i class="fa-solid fa-check" inert></i> {{localize "MANCER_SPOTIFY.Setup.Save"}}
+  </button>
+</div>
