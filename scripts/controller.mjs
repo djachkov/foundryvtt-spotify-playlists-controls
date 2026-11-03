@@ -38,7 +38,7 @@ export function notifyError(err) {
     ui.notifications.error("MANCER_SPOTIFY.Errors.PremiumRequired", {localize: true});
   }
   else ui.notifications.error(_loc("MANCER_SPOTIFY.Errors.Api", {error: err.message}));
-  console.error("mancer_spotify |", err);
+  console.error(`${MODULE_ID} |`, err);
 }
 
 export function openWindow() {

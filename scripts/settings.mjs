@@ -1,4 +1,4 @@
-export const MODULE_ID = "mancer_spotify";
+export const MODULE_ID = "mancer_spotify_controls";
 
 export function registerSettings() {
   game.settings.register(MODULE_ID, "clientId", {

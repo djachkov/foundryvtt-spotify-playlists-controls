@@ -4,7 +4,7 @@ import { onHotbarDrop } from "./macros.mjs";
 
 Hooks.once("init", () => {
   registerSettings();
-  // Macros call this: game.modules.get("mancer_spotify").api.playPlaylist("spotify:playlist:…")
+  // Macros call this: game.modules.get("mancer_spotify_controls").api.playPlaylist("spotify:playlist:…")
   game.modules.get(MODULE_ID).api = api;
 });
 
