@@ -1,4 +1,4 @@
-import { MODULE_ID, getClientId } from "./settings.mjs";
+import { MODULE_ID, getClientId, getLastDevice } from "./settings.mjs";
 import { SpotifyAuthError, isConnected } from "./auth.mjs";
 import * as spotify from "./spotify-api.mjs";
 import SpotifyApp from "./apps/spotify-app.mjs";
@@ -21,7 +21,14 @@ async function command(fn) {
     return;
   }
   try {
-    const result = await fn();
+    let result;
+    try {
+      result = await fn();
+    } catch(err) {
+      // Nothing is active: wake the last-used device (or any open one) and try once more.
+      if ( !isNoActiveDevice(err) || !(await activateDevice()) ) throw err;
+      result = await fn();
+    }
     foundry.applications.instances.get("mancer-spotify")?.refreshPlayback();
     return result;
   } catch(err) {
@@ -29,9 +36,36 @@ async function command(fn) {
   }
 }
 
+function isNoActiveDevice(err) {
+  return (err.reason === "NO_ACTIVE_DEVICE") || /no active device/i.test(err.message ?? "");
+}
+
+/**
+ * Make an open Spotify app the active device: the last one seen playing (matched by id,
+ * then by name, since some apps get a new id each session), otherwise the first one.
+ * @returns {Promise<boolean>}  Whether a device was activated
+ */
+async function activateDevice() {
+  const devices = await spotify.getDevices();
+  if ( !devices.length ) return false;
+  const last = getLastDevice();
+  const device = devices.find(d => d.id === last?.id)
+    ?? devices.find(d => d.name === last?.name)
+    ?? devices[0];
+  await spotify.transferPlayback(device.id);
+
+  // The transfer is asynchronous on Spotify's side; wait until the device reports in.
+  for ( let i = 0; i < 10; i++ ) {
+    const state = await spotify.getPlaybackState();
+    if ( state?.device?.id === device.id ) break;
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+  return true;
+}
+
 export function notifyError(err) {
   if ( err instanceof SpotifyAuthError ) ui.notifications.error(err.message);
-  else if ( err.reason === "NO_ACTIVE_DEVICE" ) {
+  else if ( isNoActiveDevice(err) ) {
     ui.notifications.warn("MANCER_SPOTIFY.Errors.NoActiveDevice", {localize: true});
   }
   else if ( err.reason === "PREMIUM_REQUIRED" ) {

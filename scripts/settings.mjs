@@ -20,6 +20,15 @@ export function registerSettings() {
     onChange: () => refreshApp()
   });
 
+  // The last device seen playing, so commands can wake it when nothing is active.
+  // Per browser, like the tokens: it belongs to the Spotify account logged in here.
+  game.settings.register(MODULE_ID, "lastDevice", {
+    scope: "client",
+    config: false,
+    type: Object,
+    default: null
+  });
+
   game.settings.register(MODULE_ID, "selectedPlaylists", {
     scope: "user",
     config: false,
@@ -44,6 +53,19 @@ export function getTokens() {
 
 export function setTokens(tokens) {
   return game.settings.set(MODULE_ID, "tokens", tokens);
+}
+
+/** @returns {{id: string, name: string}|null} */
+export function getLastDevice() {
+  const device = game.settings.get(MODULE_ID, "lastDevice");
+  return device?.id ? device : null;
+}
+
+/** @param {{id: string, name: string}} device */
+export function setLastDevice(device) {
+  const last = getLastDevice();
+  if ( (last?.id === device.id) && (last?.name === device.name) ) return;
+  return game.settings.set(MODULE_ID, "lastDevice", {id: device.id, name: device.name});
 }
 
 /** @returns {{id: string, uri: string, name: string, image: string|null}[]} */

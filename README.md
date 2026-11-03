@@ -34,8 +34,10 @@ nothing.
 5. Click **Connect Spotify** and log in. The popup closes by itself.
 6. Under **Choose Playlists**, tick the playlists you want as tiles.
 
-Start playing something in Spotify on any device once. After that, the module controls
-that device, because commands always go to your currently active Spotify device.
+Commands go to your currently active Spotify device. If none is active (Spotify is open
+but has been idle), the module wakes the device it last saw playing in this browser, or
+the first open Spotify app if that one isn't around. Spotify has to be
+running somewhere: the module can't start the app for you.
 
 ### Which Foundry address works
 
@@ -86,6 +88,7 @@ spotify.openWindow();
 |---|---|
 | Client ID | World setting. Not a secret. |
 | Spotify login tokens | This browser's localStorage only. Never stored in the world. Disconnect clears them. |
+| Last-used Spotify device | This browser's localStorage. |
 | Chosen playlists | Your Foundry user, so they follow you to other browsers. |
 
 ## Development

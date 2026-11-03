@@ -74,7 +74,7 @@
       "LoginStateMismatch": "That login link doesn't belong to the login started in this window. Click Connect Spotify and try again.",
       "TokenRequest": "Spotify rejected the login: {error}",
       "SessionExpired": "Your Spotify session expired. Connect again.",
-      "NoActiveDevice": "No active Spotify device. Start playing something in Spotify first.",
+      "NoActiveDevice": "No Spotify app is open. Open Spotify on any device and try again.",
       "PremiumRequired": "Spotify only allows playback control with a Premium account.",
       "Api": "Spotify: {error}"
     }

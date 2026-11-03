@@ -1,4 +1,5 @@
 import { getAccessToken } from "./auth.mjs";
+import { setLastDevice } from "./settings.mjs";
 
 const API_URL = "https://api.spotify.com/v1";
 
@@ -12,7 +13,8 @@ export class SpotifyError extends Error {
 
 /**
  * Call the Spotify Web API. Retries once after a 401 (with a fresh token) or a 429 (after
- * Retry-After). Never sends device_id, so player calls act on the currently active device.
+ * Retry-After). Never sends device_id, so player calls act on the currently active device;
+ * when there is none, the controller activates one first.
  * @param {string} method
  * @param {string} path             Path under /v1, or a full "next" URL from a paging object
  * @param {object} [options]
@@ -123,9 +125,33 @@ export async function getPlaylistTracks(playlistId) {
 /*  Player                                      */
 /* -------------------------------------------- */
 
-/** @returns {Promise<object|null>} The playback state, or null when nothing is active. */
-export function getPlaybackState() {
-  return request("GET", "/me/player");
+/**
+ * The playback state, or null when nothing is active. Remembers the active device, so a
+ * later command can wake it (see {@link getDevices}).
+ * @returns {Promise<object|null>}
+ */
+export async function getPlaybackState() {
+  const state = await request("GET", "/me/player");
+  if ( state?.device?.id ) setLastDevice(state.device);
+  return state;
+}
+
+/**
+ * The Spotify apps the user has open, active or not. Restricted devices (which refuse
+ * Web API commands) are left out.
+ * @returns {Promise<{id: string, name: string, is_active: boolean}[]>}
+ */
+export async function getDevices() {
+  const data = await request("GET", "/me/player/devices");
+  return (data?.devices ?? []).filter(d => d.id && !d.is_restricted);
+}
+
+/**
+ * Make a device the active one without starting playback.
+ * @param {string} deviceId
+ */
+export function transferPlayback(deviceId) {
+  return request("PUT", "/me/player", {body: {device_ids: [deviceId], play: false}});
 }
 
 /**
