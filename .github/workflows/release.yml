@@ -1,39 +1,53 @@
-# Builds a Foundry release when a version tag (e.g. v0.2.0) is pushed.
+# Builds a Foundry release when a version tag (e.g. v0.2.0) is pushed, or when run
+# manually from the Actions tab for an existing tag.
 #
 # The release gets two assets, which is what module.json's URLs point at:
 #   module.json  - served by releases/latest/download/module.json (the install/update URL)
 #   module.zip   - the package Foundry downloads and extracts
 #
-# Before tagging, bump "version" in module.json to match the tag (without the "v").
-# The "download" URL is rewritten from the tag here, so it can't go stale.
+# Before tagging, bump "version" in module.json to match the tag (a leading "v" on
+# either side is ignored). The "download" URL is rewritten from the tag here, so it
+# can't go stale.
+#
+# Re-running is safe: if the release already exists, its assets are replaced.
 
 name: Release
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build the release for, e.g. v1.0.0"
+        required: true
+        type: string
 
 permissions:
   contents: write
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
 
       - name: Check tag matches module.json version
         run: |
-          tag="${GITHUB_REF_NAME}"
           version="$(jq -r .version module.json)"
-          if [ "v${version}" != "${tag}" ]; then
-            echo "::error::Tag ${tag} does not match module.json version ${version}"
+          if [ "${version#v}" != "${TAG#v}" ]; then
+            echo "::error::Tag ${TAG} does not match module.json version ${version}"
             exit 1
           fi
 
       - name: Set download URL for this release
         run: |
-          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/module.zip"
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/module.zip"
           jq --arg url "$url" '.download = $url' module.json > module.json.tmp
           mv module.json.tmp module.json
 
@@ -43,10 +57,15 @@ jobs:
             module.json README.md callback.txt \
             scripts styles templates lang icons
 
-      - name: Create GitHub release
+      - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" module.json module.zip \
-            --title "${GITHUB_REF_NAME}" \
-            --generate-notes
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" module.json module.zip --clobber
+          else
+            gh release create "${TAG}" module.json module.zip \
+              --verify-tag \
+              --title "${TAG}" \
+              --generate-notes
+          fi
